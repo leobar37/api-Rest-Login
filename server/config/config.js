@@ -11,6 +11,12 @@
  
 process.env.NODE_ENV =  process.env.NODE_ENV || 'dev';
 
+/*=============================================
+=            google id            =
+=============================================*/
+process.env.CLIENT_ID = process.env.CLIENT_ID || '792650140448-pr64fgoo3hr96r5lv1798n867pi60kg2.apps.googleusercontent.com';
+/*=====  End of google id  ======*/
+
 //========================
 //  expiracion
 //========================
@@ -33,3 +39,4 @@ let urlDb ;
  }
 
 process.env.urlDb = urlDb; 
+

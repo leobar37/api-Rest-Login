@@ -37,7 +37,6 @@ let schemaUsuario = new Schema({
          type :String,
         default: 'USER_ROLE',
         enum : roles
-        
      },
      estado:{
         type :Boolean,
@@ -61,7 +60,5 @@ return  userObject;
 
 
 //exportando el modelo de moongose
-/* la parte del schema solo es un cascaron 
- necesitamos importarlo  
-*/
+
 module.exports = mongoose.model('usuario',schemaUsuario);

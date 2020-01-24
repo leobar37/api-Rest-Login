@@ -25,16 +25,8 @@ router.post("/usuario", [authorization,verificaRol], (req, res) => {
       estado: body.estado
     });
     usuario.save((err, usuarioDb) => {
-      if (err) {
-        return res.status(400).json({
-          ok: false,
-          err
-        });
-      }
-      res.json({
-        ok: true,
-        usuario: usuarioDb
-      });
+      if (err) {  return res.status(400).json({ok: false, err}); }
+      res.json({ok: true, usuario: usuarioDb});
     });
   }
 });
@@ -46,18 +38,13 @@ router.put("/usuario/:id", [authorization,verificaRol], (req, res) => {
   let id = req.params.id;
   //de esta manera se limitan los valor a editar desde el frontend
   let body = _.pick(req.body, ["nombre", "email", "img", "role", "estado"]);
-
+ 
+ /* busca y actuliza por id */
   Usuario.findByIdAndUpdate(id, body, { new: true }, (err, usuarioDb) => {
-    if (err || !usuarioDb) {
-      return res.status(400).json({
-        respuesta: "error de callback",
-        err
-      });
-    }
+    if (err || !usuarioDb) {return res.status(400).json({ respuesta: "error de callback",
+        err }); }
 
-    res.status(200).json({
-      usuarioDb
-    });
+    res.status(200).json({ usuarioDb});
   });
 });
 //=============================//
@@ -65,7 +52,7 @@ router.put("/usuario/:id", [authorization,verificaRol], (req, res) => {
 //===========================//
 router.get("/usuario", authorization, (req, res) => {
   /*paginacion
-metoodo skip(omitir) = = reciber como parametro los la cantidad de registro que se tiene que omitir
+metoodo skip(omitir) = = recibe como parametro los la cantidad de registro que se tiene que omitir
 limit   = recibe como parametro la cantidad de registros que se deben mostrar 
  parametros opcionarles = se recepcionan del req a travez de de query =>  req.query.parametro   
 para enviarlos ?parametro=dato
@@ -80,23 +67,9 @@ Ejemplo:
   let limite = req.query.limite;
   limite = Number(limite);
   desde = Number(desde);
-  Usuario.find({})
-    .skip(desde)
-    .limit(limite)
-    .exec((err, personas) => {
-      if (err) {
-        return res.status(400).json({
-          ok: false,
-          err
-        });
-      }
-      Usuario.countDocuments({}, (err, cont) => {
-        res.json({
-          ok: true,
-          personas,
-          cont
-        });
-      });
+  Usuario.find({}).skip(desde).limit(limite).exec((err, personas) => {
+      if (err) {return res.status(400).json({ok: false,err}); }
+      Usuario.countDocuments({}, (err, cont) => {res.json({ok: true,personas,cont}); });
     });
 });
 //=============================//
@@ -109,11 +82,11 @@ a excepciones que si se requiera
 router.delete("/usuario/:id", [authorization,verificaRol], (req, res) => {
 
   let id = req.params.id;
+  
+  /* buscar por id y elliminalo */
   Usuario.findByIdAndDelete(id, (err, usBorrado) => {
     if (err || !usBorrado) {
-      return res
-        .status(400)
-        .json({ ok: false, error: { message: "usuario no encontrado" }, err });
+      return res.status(400).json({ ok: false, error: { message: "usuario no encontrado" }, err });
     }
     res.status(200).json({ usBorrado });
   });
@@ -122,23 +95,14 @@ router.delete("/usuario/:id", [authorization,verificaRol], (req, res) => {
 //       method  update user   //
 //===========================//
 router.delete("/usuario/baja/:id", [authorization ,verificaRol], (req, res) => {
-
   let id = req.params.id;
-  Usuario.findByIdAndUpdate(
-    id,
-    { estado: false },
-    { new: true },
-    (err, usuarioUpdate) => {
-      if (err) {
-        return res.status(400).json({
-          err
-        });
-      }
-      res.json({
-        usuarioUpdate
-      });
+  Usuario.findByIdAndUpdate(id, { estado: false },{ new: true },(err, usuarioUpdate) => {
+      if (err) {return res.status(400).json({err }) }
+      res.json({usuarioUpdate });
     }
   );
 });
+
+
 
 module.exports = router;
