@@ -20,7 +20,7 @@ process.env.CLIENT_ID = process.env.CLIENT_ID || '792650140448-pr64fgoo3hr96r5lv
 //========================
 //  expiracion
 //========================
-process.env.CADUCIDADTOKEN =60 * 60 * 24 * 30 ;
+process.env.CADUCIDADTOKEN ='48h' ;
 
 //========================
 //  seed

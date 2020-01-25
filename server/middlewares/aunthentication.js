@@ -8,7 +8,6 @@ let authorization = (req, res, next) => {
   /* de esta manera se puede obtener informacion desde los header */
   let token = req.get("token");
   jwt.verify(token, process.env.SEED, (err, code) => {
-     
      /* si la verifcacion genero algun error o el codigo obtenido es ivalido */ 
     if (err || !code) {return res.status(401).json({ ok: false, err :{ message : 'token no valido'} });}  
     req.usuario = code.data;
@@ -16,7 +15,6 @@ let authorization = (req, res, next) => {
   }); 
 };
 /*=====  End of middeleware usuario autorizacion  ======*/
-
   /*=============================================
  =            seccion de comprobar usario            =
  =============================================*/

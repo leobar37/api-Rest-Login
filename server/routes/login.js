@@ -56,10 +56,7 @@ router.post( '/google', async (req, res)=>{
  let usuario = await verify(token).catch(e=>{
     res.json({error : e})
  });  
- /**algoritmo
-  *  verificar si existe  este usuario => darle un token personalizado en mi app
-  *  si existe pero no esta registrado con google => mandar mensaje de uso de sus creedenciales
-  */
+ 
 Usuario.findOne({ email : usuario.email },(err , usuarioBd)=>{
   if(err)return res.status(500).json(err);  
   
